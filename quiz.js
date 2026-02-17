@@ -2,59 +2,59 @@
     const allAvailableQuestions = [
       {
         id: 1,
-        category: "Geography",
-        question: "What is the capital of Japan?",
-        options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
+        category: "Practical Research",
+        question: "What is the purpose of a Statement of the Problem?",
+        options: ["To summarize the results", "To present the research questions", "To give recommendations", "To list references"],
         correct: 1
       },
       {
         id: 2,
-        category: "Science",
-        question: "What planet is known as the Red Planet?",
-        options: ["Venus", "Jupiter", "Mars", "Saturn"],
+        category: "Practical Research",
+        question: "Which statistical tool is used to compute the average?",
+        options: ["Median", "Mode", "Mean", "Range"],
         correct: 2
       },
       {
         id: 3,
-        category: "History",
-        question: "In which year did World War II end?",
-        options: ["1943", "1944", "1945", "1946"],
-        correct: 2
+        category: "Practical Research",
+        question: "Which research design tests cause-and-effect relationships?",
+        options: ["Descriptive research", "Eperimental research", "Historical research", "Phenomenological research"],
+        correct: 1
       },
       {
         id: 4,
-        category: "Literature",
-        question: "Who wrote 'Romeo and Juliet'?",
-        options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
-        correct: 1
-      },
-      {
-        id: 5,
-        category: "Science",
-        question: "What is the chemical symbol for gold?",
-        options: ["Ag", "Fe", "Au", "Cu"],
+        category: "Practical Research",
+        question: "Which statistical test is commonly used to compare pre-test and post-test scores?",
+        options: ["Frequency", "Percentage", "T-test", "Ranking"],
         correct: 2
       },
       {
+        id: 5,
+        category: "Practical Research",
+        question: "What tool is commonly used to collect data?",
+        options: ["Survey questionnaire", "Paint brush", "Novel", "Dictionary"],
+        correct: 0
+      },
+      {
         id: 6,
-        category: "Geography",
-        question: "Which is the largest ocean on Earth?",
-        options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
-        correct: 3
+        category: "Practical Research",
+        question: "What part of the research tells what the study is about?",
+        options: ["Title", "References", "Appendix", "Table"],
+        correct: 0
       },
       {
         id: 7,
-        category: "Entertainment",
-        question: "Which movie features the character 'Jack Sparrow'?",
-        options: ["The Mummy", "Pirates of the Caribbean", "Treasure Island", "Master and Commander"],
-        correct: 1
+        category: "Practical Research",
+        question: " What do you call information gathered from people?",
+        options: ["Data", "Story", "Opinion", "Guess"],
+        correct: 0
       },
       {
         id: 8,
-        category: "Nature",
-        question: "What is the fastest land animal?",
-        options: ["Lion", "Cheetah", "Gazelle", "Horse"],
-        correct: 1
+        category: "Practical Research",
+        question: "What statistical tool is used to count how many times something appears?",
+        options: ["Frequency", "Mean", "Median", "Mode"],
+        correct: 0
       },
       {
         id: 9,
@@ -535,3 +535,4 @@
 
     // Initialize on page load
     loadUsers();
+
