@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz Game</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="quiz.css">
+
+</head>
+<body class="h-full m-0 overflow-auto">
+  <div id="app-wrapper" class="min-h-full w-full" style="background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);">
+    
+    <!-- Auth Screen (Create or Login) -->
+    <main id="auth-screen" class="min-h-full flex flex-col items-center justify-center p-4 sm:p-6">
+      <div class="w-full max-w-md animate-slide-in">
+        <div class="text-center mb-8">
+          <div class="text-5xl sm:text-6xl mb-4 animate-float">🧠</div>
+          <h1 id="main-title" class="text-3xl sm:text-4xl font-bold mb-2" style="font-family: 'Outfit', sans-serif; color: #e94560;">Quiz Master</h1>
+          <p class="text-sm sm:text-base opacity-80" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;" id="auth-subtitle">Create an account to start playing</p>
+        </div>
+
+        <!-- Create Account Form -->
+        <form id="create-account-form" onsubmit="createAccount(event)" class="space-y-4">
+          <div>
+            <label for="username-create" class="block text-sm font-medium mb-2" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Username</label>
+            <input 
+              id="username-create" 
+              type="text" 
+              placeholder="Enter your username" 
+              required
+              maxlength="20"
+              class="w-full px-4 py-3 rounded-lg text-sm sm:text-base" 
+              style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;"
+            />
+          </div>
+          <div id="error-message-create" class="text-sm text-red-400 hidden" style="font-family: 'Space Grotesk', sans-serif;"></div>
+          <button 
+            type="submit"
+            id="create-account-btn"
+            class="option-btn w-full px-6 py-3 text-base sm:text-lg font-semibold rounded-lg shadow-lg" 
+            style="font-family: 'Outfit', sans-serif; background: #e94560; color: #1a1a2e;"
+          >
+            Create Account
+          </button>
+        </form>
+
+        <!-- Login Form -->
+        <form id="login-form" onsubmit="loginAccount(event)" class="space-y-4 hidden">
+          <div>
+            <label for="username-login" class="block text-sm font-medium mb-2" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Select Account</label>
+            <select 
+              id="username-login" 
+              required
+              class="w-full px-4 py-3 rounded-lg text-sm sm:text-base" 
+              style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;"
+            >
+              <option value="">-- Select an account --</option>
+            </select>
+          </div>
+          <div id="error-message-login" class="text-sm text-red-400 hidden" style="font-family: 'Space Grotesk', sans-serif;"></div>
+          <button 
+            type="submit"
+            id="login-account-btn"
+            class="option-btn w-full px-6 py-3 text-base sm:text-lg font-semibold rounded-lg shadow-lg" 
+            style="font-family: 'Outfit', sans-serif; background: #e94560; color: #1a1a2e;"
+          >
+            Login
+          </button>
+        </form>
+
+        <!-- Toggle Between Create/Login -->
+        <div class="mt-4 text-center">
+          <button onclick="toggleAuthMode()" class="text-sm" style="color: #e94560; font-family: 'Space Grotesk', sans-serif; background: none; border: none; cursor: pointer; text-decoration: underline;">
+            <span id="toggle-text">Already have an account? Login</span>
+          </button>
+        </div>
+
+        <p class="text-xs sm:text-sm text-center mt-6 opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">
+          🎮 Collect points, climb ranks, and challenge yourself!
+        </p>
+      </div>
+    </main>
+
+    <!-- Main Menu Screen -->
+    <main id="menu-screen" class="min-h-full flex flex-col p-4 sm:p-6 hidden">
+      <!-- Header with Profile -->
+      <header class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-6 sm:mb-8">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-bold" style="font-family: 'Outfit', sans-serif; color: #e94560;" id="header-title">Quiz Master</h1>
+        </div>
+        <button onclick="showProfile()" class="option-btn px-4 py-2 rounded-lg text-sm font-medium" style="background: rgba(233, 69, 96, 0.2); color: #e94560; font-family: 'Space Grotesk', sans-serif;">
+          👤 Profile
+        </button>
+      </header>
+
+      <!-- Profile Card -->
+      <div id="profile-card" class="rounded-2xl p-4 sm:p-6 mb-6 hidden" style="background: rgba(241, 241, 241, 0.05); border: 1px solid rgba(241, 241, 241, 0.1);">
+        <div class="flex flex-col sm:flex-row gap-4 items-center sm:items-start">
+          <div class="text-center sm:text-left flex-1">
+            <h2 id="profile-username" class="text-xl sm:text-2xl font-bold mb-2" style="font-family: 'Outfit', sans-serif; color: #f1f1f1;">Username</h2>
+            <div class="grid grid-cols-2 gap-3 sm:gap-4 text-sm">
+              <div>
+                <p class="opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Total Points</p>
+                <p id="profile-points" class="text-lg sm:text-xl font-bold" style="color: #e94560; font-family: 'Outfit', sans-serif;">0</p>
+              </div>
+              <div>
+                <p class="opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Quizzes Played</p>
+                <p id="profile-quizzes" class="text-lg sm:text-xl font-bold" style="color: #e94560; font-family: 'Outfit', sans-serif;">0</p>
+              </div>
+              <div>
+                <p class="opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Best Score</p>
+                <p id="profile-best" class="text-lg sm:text-xl font-bold" style="color: #e94560; font-family: 'Outfit', sans-serif;">0/10</p>
+              </div>
+              <div>
+                <p class="opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Current Rank</p>
+                <p id="profile-rank" class="text-lg sm:text-xl font-bold" style="color: #e94560; font-family: 'Outfit', sans-serif;">Beginner</p>
+              </div>
+            </div>
+          </div>
+          <div class="rank-badge text-3xl sm:text-4xl" id="rank-icon" style="background: rgba(233, 69, 96, 0.2);">🥚</div>
+        </div>
+        <button onclick="toggleProfile()" class="mt-4 text-sm font-medium" style="color: #e94560; font-family: 'Space Grotesk', sans-serif;">← Back</button>
+      </div>
+
+      <!-- Rank System Info -->
+      <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3 mb-6 sm:mb-8">
+        <div class="rounded-lg p-3 sm:p-4 text-center text-xs sm:text-sm" style="background: rgba(59, 130, 246, 0.2);">
+          <p class="text-xl sm:text-2xl mb-1">🥚</p>
+          <p class="font-semibold" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Egg 0-99</p>
+        </div>
+        <div class="rounded-lg p-3 sm:p-4 text-center text-xs sm:text-sm" style="background: rgba(34, 197, 94, 0.2);">
+          <p class="text-xl sm:text-2xl mb-1">🐣</p>
+          <p class="font-semibold" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Chick 100-249</p>
+        </div>
+        <div class="rounded-lg p-3 sm:p-4 text-center text-xs sm:text-sm" style="background: rgba(217, 119, 6, 0.2);">
+          <p class="text-xl sm:text-2xl mb-1">🐤</p>
+          <p class="font-semibold" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Bird 250-499</p>
+        </div>
+        <div class="rounded-lg p-3 sm:p-4 text-center text-xs sm:text-sm" style="background: rgba(168, 85, 247, 0.2);">
+          <p class="text-xl sm:text-2xl mb-1">🦅</p>
+          <p class="font-semibold" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Eagle 500-999</p>
+        </div>
+        <div class="rounded-lg p-3 sm:p-4 text-center text-xs sm:text-sm" style="background: rgba(239, 68, 68, 0.2);">
+          <p class="text-xl sm:text-2xl mb-1">🔥</p>
+          <p class="font-semibold" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Legend 1000+</p>
+        </div>
+      </div>
+
+      <!-- Main Action -->
+      <div class="flex-1 flex flex-col items-center justify-center mb-6">
+        <button id="start-quiz-btn" onclick="startQuiz()" class="option-btn px-8 sm:px-12 py-4 sm:py-6 text-xl sm:text-2xl font-bold rounded-2xl shadow-lg mb-4" style="font-family: 'Outfit', sans-serif; background: #e94560; color: #1a1a2e;">
+          Start Quiz
+        </button>
+        <p class="text-xs sm:text-sm opacity-70" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">+10 points per correct answer</p>
+      </div>
+
+      <!-- Logout Button -->
+      <button onclick="logout()" class="option-btn w-full px-4 py-2 rounded-lg text-sm font-medium" style="background: rgba(248, 113, 113, 0.2); color: #f87171; font-family: 'Space Grotesk', sans-serif;">
+        Logout
+      </button>
+    </main>
+
+    <!-- Quiz Screen -->
+    <main id="quiz-screen" class="min-h-full flex flex-col p-4 sm:p-6 hidden">
+      <!-- Header -->
+      <header class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-4 sm:mb-6">
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button onclick="exitQuiz()" class="text-lg" style="background: none; border: none; cursor: pointer;">✕</button>
+          <span id="question-counter" class="text-base sm:text-lg font-semibold" style="font-family: 'Space Grotesk', sans-serif; color: #f1f1f1;">Question 1/10</span>
+        </div>
+        <div class="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full" style="background: rgba(233, 69, 96, 0.2);">
+          <span class="text-lg">⭐</span>
+          <span id="score-display" class="text-base sm:text-lg font-bold" style="font-family: 'Outfit', sans-serif; color: #e94560;">0</span>
+        </div>
+      </header>
+
+      <!-- Progress Bar -->
+      <div class="w-full h-2 rounded-full mb-6 sm:mb-8" style="background: rgba(241, 241, 241, 0.2);">
+        <div id="progress-bar" class="progress-bar h-full rounded-full" style="width: 10%; background: #e94560;"></div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="flex-1 flex flex-col max-w-2xl w-full mx-auto">
+        <div class="rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 animate-slide-in" style="background: rgba(241, 241, 241, 0.05); border: 1px solid rgba(241, 241, 241, 0.1);">
+          <div id="category-badge" class="inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4" style="background: rgba(233, 69, 96, 0.2); color: #e94560; font-family: 'Space Grotesk', sans-serif;">
+            General Knowledge
+          </div>
+          <h2 id="question-text" class="text-lg sm:text-2xl font-semibold leading-relaxed" style="font-family: 'Outfit', sans-serif; color: #f1f1f1;">
+            What is the capital of France?
+          </h2>
+        </div>
+
+        <!-- Options -->
+        <div id="options-container" class="grid grid-cols-1 gap-2 sm:gap-3 mb-4 sm:mb-6">
+          <!-- Options will be inserted here -->
+        </div>
+
+        <!-- Feedback Message -->
+        <div id="feedback-container" class="text-center hidden">
+          <p id="feedback-message" class="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style="font-family: 'Outfit', sans-serif;"></p>
+          <button id="next-btn" onclick="nextQuestion()" class="option-btn px-6 py-3 font-semibold rounded-lg text-sm sm:text-base" style="font-family: 'Space Grotesk', sans-serif; background: #e94560; color: #1a1a2e;">
+            Next Question →
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- Results Screen -->
+    <main id="results-screen" class="min-h-full flex flex-col items-center justify-center p-4 sm:p-6 hidden">
+      <div class="text-center max-w-md w-full animate-slide-in">
+        <div id="result-emoji" class="text-6xl sm:text-7xl mb-4 sm:mb-6">🏆</div>
+        <h2 class="text-2xl sm:text-3xl font-bold mb-2" style="font-family: 'Outfit', sans-serif; color: #e94560;">Quiz Complete!</h2>
+        <p class="text-base opacity-80 mb-4 sm:mb-6" style="font-family: 'Space Grotesk', sans-serif; color: #f1f1f1;">Here's how you did:</p>
+        
+        <div class="rounded-2xl p-4 sm:p-6 mb-6 sm:mb-8" style="background: rgba(241, 241, 241, 0.05); border: 1px solid rgba(241, 241, 241, 0.1);">
+          <div class="text-4xl sm:text-5xl font-bold mb-2" style="font-family: 'Outfit', sans-serif; color: #e94560;">
+            <span id="final-score">0</span>/10
+          </div>
+          <p id="score-message" class="text-base sm:text-lg mb-4" style="font-family: 'Space Grotesk', sans-serif; color: #f1f1f1;">Great job!</p>
+          
+          <div class="flex justify-center gap-4 sm:gap-8 text-sm mb-4" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">
+            <div>
+              <span class="block text-2xl sm:text-3xl font-bold" style="color: #4ade80;" id="correct-count">0</span>
+              <span class="opacity-70 text-xs">Correct</span>
+            </div>
+            <div>
+              <span class="block text-2xl sm:text-3xl font-bold" style="color: #f87171;" id="wrong-count">0</span>
+              <span class="opacity-70 text-xs">Wrong</span>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t" style="border-color: rgba(241, 241, 241, 0.1);">
+            <p class="text-xs opacity-70 mb-2" style="color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;">Points Earned</p>
+            <p id="points-earned" class="text-2xl sm:text-3xl font-bold" style="color: #fbbf24; font-family: 'Outfit', sans-serif;">+0</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 w-full">
+          <button onclick="backToMenu()" class="option-btn px-8 py-3 text-base sm:text-lg font-semibold rounded-lg" style="font-family: 'Outfit', sans-serif; background: #e94560; color: #1a1a2e;">
+            Play Again 🔄
+          </button>
+          <button onclick="backToMenu()" class="option-btn px-8 py-3 text-base sm:text-lg font-semibold rounded-lg" style="font-family: 'Space Grotesk', sans-serif; background: rgba(233, 69, 96, 0.2); color: #e94560;">
+            Back to Menu
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="quiz.js"></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf2dd3a41c7ef87',t:'MTc3MTMwNTkyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
