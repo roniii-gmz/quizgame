@@ -1,66 +1,148 @@
-    // Quiz Questions Data
-    const questions = [
+// All Available Questions - Add as many as you want!
+    const allAvailableQuestions = [
       {
+        id: 1,
         category: "Geography",
         question: "What is the capital of Japan?",
         options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
         correct: 1
       },
       {
+        id: 2,
         category: "Science",
         question: "What planet is known as the Red Planet?",
         options: ["Venus", "Jupiter", "Mars", "Saturn"],
         correct: 2
       },
       {
+        id: 3,
         category: "History",
         question: "In which year did World War II end?",
         options: ["1943", "1944", "1945", "1946"],
         correct: 2
       },
       {
+        id: 4,
         category: "Literature",
         question: "Who wrote 'Romeo and Juliet'?",
         options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
         correct: 1
       },
       {
+        id: 5,
         category: "Science",
         question: "What is the chemical symbol for gold?",
         options: ["Ag", "Fe", "Au", "Cu"],
         correct: 2
       },
       {
+        id: 6,
         category: "Geography",
         question: "Which is the largest ocean on Earth?",
         options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
         correct: 3
       },
       {
+        id: 7,
         category: "Entertainment",
         question: "Which movie features the character 'Jack Sparrow'?",
         options: ["The Mummy", "Pirates of the Caribbean", "Treasure Island", "Master and Commander"],
         correct: 1
       },
       {
+        id: 8,
         category: "Nature",
         question: "What is the fastest land animal?",
         options: ["Lion", "Cheetah", "Gazelle", "Horse"],
         correct: 1
       },
       {
+        id: 9,
         category: "Technology",
         question: "Who co-founded Apple Inc.?",
         options: ["Bill Gates", "Mark Zuckerberg", "Steve Jobs", "Jeff Bezos"],
         correct: 2
       },
       {
+        id: 10,
         category: "Music",
         question: "Which band performed 'Bohemian Rhapsody'?",
         options: ["The Beatles", "Led Zeppelin", "Queen", "Pink Floyd"],
         correct: 2
+      },
+      {
+        id: 11,
+        category: "Geography",
+        question: "What is the capital of France?",
+        options: ["Lyon", "Paris", "Marseille", "Nice"],
+        correct: 1
+      },
+      {
+        id: 12,
+        category: "Science",
+        question: "How many bones does an adult human have?",
+        options: ["186", "206", "226", "246"],
+        correct: 1
+      },
+      {
+        id: 13,
+        category: "History",
+        question: "Who was the first President of the United States?",
+        options: ["Thomas Jefferson", "George Washington", "John Adams", "Benjamin Franklin"],
+        correct: 1
+      },
+      {
+        id: 14,
+        category: "Literature",
+        question: "Who wrote '1984'?",
+        options: ["George Orwell", "Ray Bradbury", "Aldous Huxley", "Kurt Vonnegut"],
+        correct: 0
+      },
+      {
+        id: 15,
+        category: "Science",
+        question: "What is the hardest natural substance on Earth?",
+        options: ["Gold", "Diamond", "Platinum", "Sapphire"],
+        correct: 1
+      },
+      {
+        id: 16,
+        category: "Geography",
+        question: "What is the longest river in the world?",
+        options: ["Amazon", "Yangtze", "Nile", "Mississippi"],
+        correct: 2
+      },
+      {
+        id: 17,
+        category: "Entertainment",
+        question: "Who directed 'The Shawshank Redemption'?",
+        options: ["Steven Spielberg", "Frank Darabont", "Martin Scorsese", "Christopher Nolan"],
+        correct: 1
+      },
+      {
+        id: 18,
+        category: "Nature",
+        question: "How many legs does a spider have?",
+        options: ["6", "8", "10", "12"],
+        correct: 1
+      },
+      {
+        id: 19,
+        category: "Technology",
+        question: "In what year was the first iPhone released?",
+        options: ["2005", "2006", "2007", "2008"],
+        correct: 2
+      },
+      {
+        id: 20,
+        category: "Music",
+        question: "How many strings does a standard violin have?",
+        options: ["4", "5", "6", "7"],
+        correct: 0
       }
     ];
+
+    let questions = [];
 
     // Rank System
     const ranks = [
@@ -159,6 +241,7 @@
         rank_tier: "Egg",
         quizzes_completed: 0,
         best_score: 0,
+        answered_question_ids: [],
         created_at: new Date().toISOString()
       };
 
@@ -226,11 +309,39 @@
       updateProfileDisplay();
     }
 
+    function getRandomQuestions(count) {
+      // Get question IDs that haven't been answered yet
+      const answeredIds = currentUser.answered_question_ids || [];
+      const unansweredQuestions = allAvailableQuestions.filter(q => !answeredIds.includes(q.id));
+
+      // If all questions have been answered, reset the answered list
+      if (unansweredQuestions.length === 0) {
+        currentUser.answered_question_ids = [];
+        return getRandomQuestions(count);
+      }
+
+      // Pick random questions (up to count, or less if fewer available)
+      const selected = [];
+      const availableCopy = [...unansweredQuestions];
+      const numToSelect = Math.min(count, availableCopy.length);
+
+      for (let i = 0; i < numToSelect; i++) {
+        const randomIndex = Math.floor(Math.random() * availableCopy.length);
+        selected.push(availableCopy[randomIndex]);
+        availableCopy.splice(randomIndex, 1);
+      }
+
+      return selected;
+    }
+
     function startQuiz() {
       currentQuestion = 0;
       score = 0;
       answered = false;
       
+      // Get 10 random unanswered questions
+      questions = getRandomQuestions(10);
+
       document.getElementById('menu-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
       document.getElementById('results-screen').classList.add('hidden');
@@ -368,8 +479,14 @@
         scoreMessage.textContent = 'Time to study more!';
       }
 
-      // Update user stats
+      // Mark questions as answered and update user stats
       if (currentUser) {
+        questions.forEach(q => {
+          if (!currentUser.answered_question_ids.includes(q.id)) {
+            currentUser.answered_question_ids.push(q.id);
+          }
+        });
+
         const newTotalPoints = (currentUser.total_points || 0) + points;
         const newBestScore = Math.max(currentUser.best_score || 0, score);
         const newRank = getRank(newTotalPoints).name;
