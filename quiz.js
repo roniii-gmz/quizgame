@@ -58,52 +58,52 @@
       },
       {
         id: 9,
-        category: "Technology",
-        question: "Who co-founded Apple Inc.?",
-        options: ["Bill Gates", "Mark Zuckerberg", "Steve Jobs", "Jeff Bezos"],
-        correct: 2
+        category: "Practical Research",
+        question: "What element in the study highlights the significance of the research?",
+        options: ["Appendix", "References", "Table of Contents", "Introduction"],
+        correct: 3
       },
       {
         id: 10,
-        category: "Music",
-        question: "Which band performed 'Bohemian Rhapsody'?",
-        options: ["The Beatles", "Led Zeppelin", "Queen", "Pink Floyd"],
-        correct: 2
+        category: "Practical Research",
+        question: "The group selected to represent the entire population is called by what name?",
+        options: ["Sample", "Conclusion ", "Variable ", "Theory"],
+        correct: 0
       },
       {
         id: 11,
-        category: "Geography",
-        question: "What is the capital of France?",
-        options: ["Lyon", "Paris", "Marseille", "Nice"],
-        correct: 1
+        category: "Practical Research",
+        question: "Which part of the study uses tables or graphs to present the findings?",
+        options: ["Results", "References", "Title Page", "Appendix"],
+        correct: 0
       },
       {
         id: 12,
-        category: "Science",
-        question: "How many bones does an adult human have?",
-        options: ["186", "206", "226", "246"],
+        category: "Practical Research",
+        question: "What method gathers data by watching and recording behavior or events?",
+        options: ["Interview", "Observation", "Experiment", "Survey"],
         correct: 1
       },
       {
         id: 13,
-        category: "History",
-        question: "Who was the first President of the United States?",
-        options: ["Thomas Jefferson", "George Washington", "John Adams", "Benjamin Franklin"],
-        correct: 1
-      },
-      {
-        id: 14,
-        category: "Literature",
-        question: "Who wrote '1984'?",
-        options: ["George Orwell", "Ray Bradbury", "Aldous Huxley", "Kurt Vonnegut"],
+        category: "Practical Research",
+        question: "‎What part of the research gives a brief overview of the whole study?",
+        options: ["Abstract", "Methodology", "References", "Appendix"],
         correct: 0
       },
       {
-        id: 15,
-        category: "Science",
-        question: "What is the hardest natural substance on Earth?",
-        options: ["Gold", "Diamond", "Platinum", "Sapphire"],
+        id: 14,
+        category: "Practical Research",
+        question: "What part of the research lists the sources used in the study?",
+        options: ["Appendix ", "References ", "Introduction ", "Results "],
         correct: 1
+      },
+      {
+        id: 15,
+        category: "Practical Research",
+        question: "What is the term for a research study's general framework or plan?",
+        options: ["Graph", "Instrument ", "Frequency ", "Research Design"],
+        correct: 3
       },
       {
         id: 16,
@@ -535,4 +535,5 @@
 
     // Initialize on page load
     loadUsers();
+
 
