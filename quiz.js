@@ -107,38 +107,38 @@
       },
       {
         id: 16,
-        category: "Geography",
-        question: "What is the longest river in the world?",
-        options: ["Amazon", "Yangtze", "Nile", "Mississippi"],
-        correct: 2
+        category: "Practical Research",
+        question: "What does PR2 stand for?",
+        options: ["Programming Rules 2", "Practical Research 2", "Project Report 2", "Professional Reading 2"],
+        correct: 1
       },
       {
         id: 17,
-        category: "Entertainment",
-        question: "Who directed 'The Shawshank Redemption'?",
-        options: ["Steven Spielberg", "Frank Darabont", "Martin Scorsese", "Christopher Nolan"],
+        category: "Practical Research",
+        question: "Which research method focuses on numerical data and statistical analysis?",
+        options: ["Qualitative Research", "Quantitative Research", "Historical Research", "Case Study"],
         correct: 1
       },
       {
         id: 18,
-        category: "Nature",
-        question: "How many legs does a spider have?",
-        options: ["6", "8", "10", "12"],
-        correct: 1
+        category: "Practical Research",
+        question: "In research, what is a hypothesis?",
+        options: ["A proven fact", "A research title", "A testable prediction", "A list of references"],
+        correct: 2
       },
       {
         id: 19,
-        category: "Technology",
-        question: "In what year was the first iPhone released?",
-        options: ["2005", "2006", "2007", "2008"],
+        category: "Practical Research",
+        question: "Which part of the research paper presents the findings of the study?",
+        options: ["Introduction", "Methodology", "Results", "Acknowledgement"],
         correct: 2
       },
       {
         id: 20,
-        category: "Music",
-        question: "How many strings does a standard violin have?",
-        options: ["4", "5", "6", "7"],
-        correct: 0
+        category: "Practical Research",
+        question: "What is the purpose of a Review of Related Literature (RRL)?",
+        options: ["To summarize the results", "To present raw data", "To show previous studies related to the topic", "To list survey questions"],
+        correct: 2
       }
     ];
 
@@ -535,5 +535,6 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
