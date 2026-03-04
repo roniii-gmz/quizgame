@@ -1,66 +1,145 @@
 
     // Quiz Questions Data
     const questions = [
-      {
-        category: "Geography",
-        question: "What is the capital of Japan?",
-        options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
+        {
+        category: "Practical Research",
+        question: "What is the purpose of a Statement of the Problem?",
+        options: ["To summarize the results", "To present the research questions", "To give recommendations", "To list references"],
         correct: 1
-      },
-      {
-        category: "Science",
-        question: "What planet is known as the Red Planet?",
-        options: ["Venus", "Jupiter", "Mars", "Saturn"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "Which statistical tool is used to compute the average?",
+        options: ["Median", "Mode", "Mean", "Range"],
         correct: 2
-      },
-      {
-        category: "History",
-        question: "In which year did World War II end?",
-        options: ["1943", "1944", "1945", "1946"],
-        correct: 2
-      },
-      {
-        category: "Literature",
-        question: "Who wrote 'Romeo and Juliet'?",
-        options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "Which research design tests cause-and-effect relationships?",
+        options: ["Descriptive research", "Eperimental research", "Historical research", "Phenomenological research"],
         correct: 1
-      },
-      {
-        category: "Science",
-        question: "What is the chemical symbol for gold?",
-        options: ["Ag", "Fe", "Au", "Cu"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "Which statistical test is commonly used to compare pre-test and post-test scores?",
+        options: ["Frequency", "Percentage", "T-test", "Ranking"],
         correct: 2
-      },
-      {
-        category: "Geography",
-        question: "Which is the largest ocean on Earth?",
-        options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What tool is commonly used to collect data?",
+        options: ["Survey questionnaire", "Paint brush", "Novel", "Dictionary"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What part of the research tells what the study is about?",
+        options: ["Title", "References", "Appendix", "Table"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: " What do you call information gathered from people?",
+        options: ["Data", "Story", "Opinion", "Guess"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What statistical tool is used to count how many times something appears?",
+        options: ["Frequency", "Mean", "Median", "Mode"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What element in the study highlights the significance of the research?",
+        options: ["Appendix", "References", "Table of Contents", "Introduction"],
         correct: 3
-      },
-      {
-        category: "Entertainment",
-        question: "Which movie features the character 'Jack Sparrow'?",
-        options: ["The Mummy", "Pirates of the Caribbean", "Treasure Island", "Master and Commander"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "The group selected to represent the entire population is called by what name?",
+        options: ["Sample", "Conclusion ", "Variable ", "Theory"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: "Which part of the study uses tables or graphs to present the findings?",
+        options: ["Results", "References", "Title Page", "Appendix"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What method gathers data by watching and recording behavior or events?",
+        options: ["Interview", "Observation", "Experiment", "Survey"],
         correct: 1
-      },
-      {
-        category: "Nature",
-        question: "What is the fastest land animal?",
-        options: ["Lion", "Cheetah", "Gazelle", "Horse"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "‎What part of the research gives a brief overview of the whole study?",
+        options: ["Abstract", "Methodology", "References", "Appendix"],
+        correct: 0
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What part of the research lists the sources used in the study?",
+        options: ["Appendix ", "References ", "Introduction ", "Results "],
         correct: 1
-      },
-      {
-        category: "Technology",
-        question: "Who co-founded Apple Inc.?",
-        options: ["Bill Gates", "Mark Zuckerberg", "Steve Jobs", "Jeff Bezos"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What is the term for a research study's general framework or plan?",
+        options: ["Graph", "Instrument ", "Frequency ", "Research Design"],
+        correct: 3
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What does PR2 stand for?",
+        options: ["Programming Rules 2", "Practical Research 2", "Project Report 2", "Professional Reading 2"],
+        correct: 1
+        },
+        
+        {
+        category: "Practical Research",
+        question: "Which research method focuses on numerical data and statistical analysis?",
+        options: ["Qualitative Research", "Quantitative Research", "Historical Research", "Case Study"],
+        correct: 1
+        },
+        
+        {
+        category: "Practical Research",
+        question: "In research, what is a hypothesis?",
+        options: ["A proven fact", "A research title", "A testable prediction", "A list of references"],
         correct: 2
-      },
-      {
-        category: "Music",
-        question: "Which band performed 'Bohemian Rhapsody'?",
-        options: ["The Beatles", "Led Zeppelin", "Queen", "Pink Floyd"],
+        },
+        
+        {
+        category: "Practical Research",
+        question: "Which part of the research paper presents the findings of the study?",
+        options: ["Introduction", "Methodology", "Results", "Acknowledgement"],
         correct: 2
-      }
+        },
+        
+        {
+        category: "Practical Research",
+        question: "What is the purpose of a Review of Related Literature (RRL)?",
+        options: ["To summarize the results", "To present raw data", "To show previous studies related to the topic", "To list survey questions"],
+        correct: 2
+        }
     ];
 
     // Rank System
@@ -454,3 +533,4 @@
     // Initialize
     initializeSDK();
     applyConfig();
+
