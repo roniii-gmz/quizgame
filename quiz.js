@@ -154,9 +154,12 @@
     ];
 
     // Game State
+    let currentUser = null;
     let currentQuestion = 0;
     let score = 0;
     let answered = false;
+    let allUsers = [];
+    let isCreateMode = true;
     let timerInterval; // <--- MUST HAVE THIS
     let timeLeft = 15; 
     let streak = 0;
@@ -572,6 +575,7 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
 
