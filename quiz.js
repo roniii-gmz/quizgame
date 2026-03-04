@@ -345,29 +345,18 @@ function nextQuestion() {
     }
 
     function getRandomQuestions(count) {
-      // Get question IDs that haven't been answered yet
-      const answeredIds = currentUser.answered_question_ids || [];
-      const unansweredQuestions = allAvailableQuestions.filter(q => !answeredIds.includes(q.id));
+  const answeredIds = currentUser ? (currentUser.answered_question_ids || []) : [];
+  let available = allAvailableQuestions.filter(q => !answeredIds.includes(q.id));
 
-      // If all questions have been answered, reset the answered list
-      if (unansweredQuestions.length === 0) {
-        currentUser.answered_question_ids = [];
-        return getRandomQuestions(count);
-      }
+  // If no new questions, reset for research purposes so they can play again
+  if (available.length === 0) {
+    if (currentUser) currentUser.answered_question_ids = [];
+    available = [...allAvailableQuestions];
+  }
 
-      // Pick random questions (up to count, or less if fewer available)
-      const selected = [];
-      const availableCopy = [...unansweredQuestions];
-      const numToSelect = Math.min(count, availableCopy.length);
+  return available.sort(() => 0.5 - Math.random()).slice(0, count);
+}
 
-      for (let i = 0; i < numToSelect; i++) {
-        const randomIndex = Math.floor(Math.random() * availableCopy.length);
-        selected.push(availableCopy[randomIndex]);
-        availableCopy.splice(randomIndex, 1);
-      }
-
-      return selected;
-    }
 
     function startQuiz() {
       currentQuestion = 0;
@@ -610,6 +599,7 @@ function nextQuestion() {
 
     // Initialize on page load
     loadUsers();
+
 
 
 
