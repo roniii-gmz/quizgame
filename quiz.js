@@ -527,17 +527,24 @@
 
     function startTimer() {
       timeLeft = 15; 
-      const timerEl = document.getElementById('timer-display'); // You'll need to add this ID to your HTML
+      const timerEl = document.getElementById('timer-display');
       
-      if(timerEl) timerEl.textContent = `Time: ${timeLeft}s`;
+      if (timerEl) {
+        timerEl.textContent = `Time: ${timeLeft}s`;
+        timerEl.classList.remove('timer-low');
+      }
     
       timerInterval = setInterval(() => {
         timeLeft--;
-        if(timerEl) timerEl.textContent = `Time: ${timeLeft}s`;
+        if (timerEl) timerEl.textContent = `Time: ${timeLeft}s`;
+        
+        if (timeLeft <= 5 && timerEl) {
+          timerEl.classList.add('timer-low');
+        }
         
         if (timeLeft <= 0) {
           clearInterval(timerInterval);
-          selectAnswer(-1); // Automatically "miss" the question
+          selectAnswer(-1); // This triggers the "Time's Up" logic
         }
       }, 1000);
     }
@@ -545,8 +552,10 @@
 
 
 
+
     // Initialize on page load
     loadUsers();
+
 
 
 
