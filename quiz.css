@@ -41,3 +41,9 @@
       font-size: 28px;
       font-weight: bold;
     }
+
+      /* Makes the timer blink red when time is below 5 seconds */
+      .timer-low {
+        color: #ff4d4d !important;
+        animation: pulse 0.5s infinite;
+      }
