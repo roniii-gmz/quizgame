@@ -353,6 +353,10 @@
       const q = questions[currentQuestion];
       answered = false;
       
+      // NEW: Reset and Start the timer
+      clearInterval(timerInterval);
+      startTimer();
+    
       document.getElementById('question-counter').textContent = `Question ${currentQuestion + 1}/${questions.length}`;
       document.getElementById('score-display').textContent = score;
       document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
@@ -362,31 +366,21 @@
       document.getElementById('feedback-container').classList.add('hidden');
       
       const container = document.getElementById('options-container');
-      
       container.innerHTML = q.options.map((option, index) => `
         <button 
           data-option="${index}"
           onclick="selectAnswer(${index})"
-          class="option-btn w-full p-3 sm:p-4 text-left rounded-lg sm:rounded-xl font-medium text-sm sm:text-base transition-all"
-          style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1; font-family: 'Space Grotesk', sans-serif;"
+          class="option-btn w-full p-3 sm:p-4 text-left rounded-lg transition-all"
+          style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1;"
         >
-          <span class="inline-flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 rounded-lg mr-2 sm:mr-3 text-xs sm:text-sm font-bold" style="background: rgba(233, 69, 96, 0.3); color: #e94560;">
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg mr-3 font-bold" style="background: rgba(233, 69, 96, 0.3); color: #e94560;">
             ${String.fromCharCode(65 + index)}
           </span>
           ${option}
         </button>
       `).join('');
-
-      container.querySelectorAll('button').forEach((btn, i) => {
-        btn.style.opacity = '0';
-        btn.style.transform = 'translateY(20px)';
-        setTimeout(() => {
-          btn.style.transition = 'all 0.3s ease';
-          btn.style.opacity = '1';
-          btn.style.transform = 'translateY(0)';
-        }, i * 100);
-      });
     }
+
 
     function selectAnswer(index) {
       if (answered) return;
@@ -553,6 +547,7 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
 
