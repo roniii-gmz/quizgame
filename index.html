@@ -191,30 +191,50 @@
 
 
       <!-- Question Card -->
-      <div class="flex-1 flex flex-col max-w-2xl w-full mx-auto">
-        <div class="rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-4 sm:mb-6 animate-slide-in" style="background: rgba(241, 241, 241, 0.05); border: 1px solid rgba(241, 241, 241, 0.1);">
-          <div id="category-badge" class="inline-block px-3 py-1 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4" style="background: rgba(233, 69, 96, 0.2); color: #e94560; font-family: 'Space Grotesk', sans-serif;">
-            General Knowledge
-          </div>
-          <h2 id="question-text" class="text-lg sm:text-2xl font-semibold leading-relaxed" style="font-family: 'Outfit', sans-serif; color: #f1f1f1;">
-            What is the capital of France?
-          </h2>
-        </div>
+      <main id="quiz-screen" class="min-h-full flex flex-col p-4 sm:p-6 hidden">
+  <header class="flex justify-between items-center mb-4">
+    <div class="flex items-center gap-2">
+      <button onclick="exitQuiz()" class="text-[#f1f1f1] hover:text-[#e94560]">✕</button>
+      <span id="question-counter" class="text-sm sm:text-base font-semibold text-[#f1f1f1]">Question 1/10</span>
+    </div>
+    <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-[rgba(233,69,96,0.2)]">
+      <span>⭐</span>
+      <span id="score-display" class="font-bold text-[#e94560]">0</span>
+    </div>
+  </header>
 
-        <!-- Options -->
-        <div id="options-container" class="grid grid-cols-1 gap-2 sm:gap-3 mb-4 sm:mb-6">
-          <!-- Options will be inserted here -->
-        </div>
+  <div class="w-full h-1.5 bg-[rgba(241,241,241,0.2)] rounded-full mb-6">
+    <div id="progress-bar" class="h-full bg-[#e94560] rounded-full transition-all duration-500" style="width: 10%"></div>
+  </div>
 
-        <!-- Feedback Message -->
-        <div id="feedback-container" class="text-center hidden">
-          <p id="feedback-message" class="text-base sm:text-lg font-semibold mb-3 sm:mb-4" style="font-family: 'Outfit', sans-serif;"></p>
-          <button id="next-btn" onclick="nextQuestion()" class="option-btn px-6 py-3 font-semibold rounded-lg text-sm sm:text-base" style="font-family: 'Space Grotesk', sans-serif; background: #e94560; color: #1a1a2e;">
-            Next Question →
-          </button>
-        </div>
+  <div class="flex justify-center mb-4">
+    <div id="timer-display" class="px-5 py-1 rounded-full text-xs font-bold border border-[#e94560] text-[#e94560] bg-[rgba(233,69,96,0.1)]">
+      Time: 15s
+    </div>
+  </div>
+
+  <div class="flex-1 flex flex-col max-w-2xl w-full mx-auto">
+    <div class="rounded-2xl p-5 sm:p-8 mb-4 animate-slide-in bg-[rgba(241,241,241,0.05)] border border-[rgba(241,241,241,0.1)] shadow-xl">
+      <div id="category-badge" class="inline-block px-3 py-1 rounded-full text-xs font-medium mb-4 bg-[rgba(233,69,96,0.2)] text-[#e94560]">
+        Practical Research
       </div>
-    </main>
+      <h2 id="question-text" class="text-lg sm:text-2xl font-semibold leading-tight text-[#f1f1f1] font-['Outfit']">
+        What is the purpose of a Statement of the Problem?
+      </h2>
+    </div>
+
+    <div id="options-container" class="grid grid-cols-1 gap-3 mb-6">
+      </div>
+
+    <div id="feedback-container" class="text-center hidden animate-slide-in">
+      <p id="feedback-message" class="text-lg font-bold mb-4"></p>
+      <button id="next-btn" onclick="nextQuestion()" class="w-full sm:w-auto px-10 py-3 bg-[#e94560] text-[#1a1a2e] font-bold rounded-xl hover:scale-105 transition-transform">
+        Next Question →
+      </button>
+    </div>
+  </div>
+</main>
+
 
     <!-- Results Screen -->
     <main id="results-screen" class="min-h-full flex flex-col items-center justify-center p-4 sm:p-6 hidden">
@@ -261,5 +281,6 @@
   <script src="quiz.js"></script>
 <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cf2dd3a41c7ef87',t:'MTc3MTMwNTkyNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
 
 
