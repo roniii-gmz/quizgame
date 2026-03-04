@@ -1,188 +1,76 @@
-// 1. All Available Questions
-const allAvailableQuestions = [
-  { id: 1, category: "Practical Research", question: "What is the purpose of a Statement of the Problem?", options: ["To summarize the results", "To present the research questions", "To give recommendations", "To list references"], correct: 1 },
-  { id: 2, category: "Practical Research", question: "Which statistical tool is used to compute the average?", options: ["Median", "Mode", "Mean", "Range"], correct: 2 },
-  { id: 3, category: "Practical Research", question: "Which research design tests cause-and-effect relationships?", options: ["Descriptive research", "Eperimental research", "Historical research", "Phenomenological research"], correct: 1 },
-  { id: 4, category: "Practical Research", question: "Which statistical test is commonly used to compare pre-test and post-test scores?", options: ["Frequency", "Percentage", "T-test", "Ranking"], correct: 2 },
-  { id: 5, category: "Practical Research", question: "What tool is commonly used to collect data?", options: ["Survey questionnaire", "Paint brush", "Novel", "Dictionary"], correct: 0 },
-  { id: 6, category: "Practical Research", question: "What part of the research tells what the study is about?", options: ["Title", "References", "Appendix", "Table"], correct: 0 },
-  { id: 7, category: "Practical Research", question: "What do you call information gathered from people?", options: ["Data", "Story", "Opinion", "Guess"], correct: 0 },
-  { id: 8, category: "Practical Research", question: "What statistical tool is used to count how many times something appears?", options: ["Frequency", "Mean", "Median", "Mode"], correct: 0 },
-  { id: 9, category: "Practical Research", question: "What element in the study highlights the significance of the research?", options: ["Appendix", "References", "Table of Contents", "Introduction"], correct: 3 },
-  { id: 10, category: "Practical Research", question: "The group selected to represent the entire population is called by what name?", options: ["Sample", "Conclusion ", "Variable ", "Theory"], correct: 0 },
-  { id: 11, category: "Practical Research", question: "Which part of the study uses tables or graphs to present the findings?", options: ["Results", "References", "Title Page", "Appendix"], correct: 0 },
-  { id: 12, category: "Practical Research", question: "What method gathers data by watching and recording behavior or events?", options: ["Interview", "Observation", "Experiment", "Survey"], correct: 1 },
-  { id: 13, category: "Practical Research", question: "‎What part of the research gives a brief overview of the whole study?", options: ["Abstract", "Methodology", "References", "Appendix"], correct: 0 },
-  { id: 14, category: "Practical Research", question: "What part of the research lists the sources used in the study?", options: ["Appendix ", "References ", "Introduction ", "Results "], correct: 1 },
-  { id: 15, category: "Practical Research", question: "What is the term for a research study's general framework or plan?", options: ["Graph", "Instrument ", "Frequency ", "Research Design"], correct: 3 },
-  { id: 16, category: "Practical Research", question: "What does PR2 stand for?", options: ["Programming Rules 2", "Practical Research 2", "Project Report 2", "Professional Reading 2"], correct: 1 },
-  { id: 17, category: "Practical Research", question: "Which research method focuses on numerical data and statistical analysis?", options: ["Qualitative Research", "Quantitative Research", "Historical Research", "Case Study"], correct: 1 },
-  { id: 18, category: "Practical Research", question: "In research, what is a hypothesis?", options: ["A proven fact", "A research title", "A testable prediction", "A list of references"], correct: 2 },
-  { id: 19, category: "Practical Research", question: "Which part of the research paper presents the findings of the study?", options: ["Introduction", "Methodology", "Results", "Acknowledgement"], correct: 2 },
-  { id: 20, category: "Practical Research", question: "What is the purpose of a Review of Related Literature (RRL)?", options: ["To summarize the results", "To present raw data", "To show previous studies related to the topic", "To list survey questions"], correct: 2 }
-];
 
-// 2. Rank System
-const ranks = [
-  { name: "Egg", emoji: "🥚", minPoints: 0, maxPoints: 99 },
-  { name: "Chick", emoji: "🐣", minPoints: 100, maxPoints: 249 },
-  { name: "Bird", emoji: "🐤", minPoints: 250, maxPoints: 499 },
-  { name: "Eagle", emoji: "🦅", minPoints: 500, maxPoints: 999 },
-  { name: "Legend", emoji: "🔥", minPoints: 1000, maxPoints: Infinity }
-];
+    // Quiz Questions Data
+    const questions = [
+      {
+        category: "Geography",
+        question: "What is the capital of Japan?",
+        options: ["Seoul", "Tokyo", "Beijing", "Bangkok"],
+        correct: 1
+      },
+      {
+        category: "Science",
+        question: "What planet is known as the Red Planet?",
+        options: ["Venus", "Jupiter", "Mars", "Saturn"],
+        correct: 2
+      },
+      {
+        category: "History",
+        question: "In which year did World War II end?",
+        options: ["1943", "1944", "1945", "1946"],
+        correct: 2
+      },
+      {
+        category: "Literature",
+        question: "Who wrote 'Romeo and Juliet'?",
+        options: ["Charles Dickens", "William Shakespeare", "Jane Austen", "Mark Twain"],
+        correct: 1
+      },
+      {
+        category: "Science",
+        question: "What is the chemical symbol for gold?",
+        options: ["Ag", "Fe", "Au", "Cu"],
+        correct: 2
+      },
+      {
+        category: "Geography",
+        question: "Which is the largest ocean on Earth?",
+        options: ["Atlantic Ocean", "Indian Ocean", "Arctic Ocean", "Pacific Ocean"],
+        correct: 3
+      },
+      {
+        category: "Entertainment",
+        question: "Which movie features the character 'Jack Sparrow'?",
+        options: ["The Mummy", "Pirates of the Caribbean", "Treasure Island", "Master and Commander"],
+        correct: 1
+      },
+      {
+        category: "Nature",
+        question: "What is the fastest land animal?",
+        options: ["Lion", "Cheetah", "Gazelle", "Horse"],
+        correct: 1
+      },
+      {
+        category: "Technology",
+        question: "Who co-founded Apple Inc.?",
+        options: ["Bill Gates", "Mark Zuckerberg", "Steve Jobs", "Jeff Bezos"],
+        correct: 2
+      },
+      {
+        category: "Music",
+        question: "Which band performed 'Bohemian Rhapsody'?",
+        options: ["The Beatles", "Led Zeppelin", "Queen", "Pink Floyd"],
+        correct: 2
+      }
+    ];
 
-// 3. Game State
-let questions = [];
-let currentUser = null;
-let currentQuestion = 0;
-let score = 0;
-let answered = false;
-let allUsers = [];
-let isCreateMode = true;
-
-// NEW: Timer & Streak State
-let timerInterval;
-let timeLeft = 15;
-let streak = 0;
-
-// 4. Timer Logic
-function startTimer() {
-  timeLeft = 15;
-  const timerEl = document.getElementById('timer-display');
-  if (timerEl) {
-    timerEl.textContent = `Time: ${timeLeft}s`;
-    timerEl.style.color = "#e94560"; // Reset color
-  }
-
-  timerInterval = setInterval(() => {
-    timeLeft--;
-    if (timerEl) timerEl.textContent = `Time: ${timeLeft}s`;
-    
-    if (timeLeft <= 5 && timerEl) {
-      timerEl.style.color = "#ff4d4d"; // Red warning
-    }
-
-    if (timeLeft <= 0) {
-      clearInterval(timerInterval);
-      selectAnswer(-1); // Force a timeout
-    }
-  }, 1000);
-}
-
-// 5. Quiz Logic
-function startQuiz() {
-  currentQuestion = 0;
-  score = 0;
-  streak = 0;
-  answered = false;
-  
-  questions = getRandomQuestions(10);
-
-  document.getElementById('menu-screen').classList.add('hidden');
-  document.getElementById('quiz-screen').classList.remove('hidden');
-  document.getElementById('results-screen').classList.add('hidden');
-  
-  displayQuestion();
-}
-
-function displayQuestion() {
-  if (questions.length === 0) return;
-  const q = questions[currentQuestion];
-  answered = false;
-  
-  // Timer Reset
-  clearInterval(timerInterval);
-  startTimer();
-
-  // UI Updates
-  const counter = document.getElementById('question-counter');
-  if (counter) counter.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
-  
-  const scoreDisp = document.getElementById('score-display');
-  if (scoreDisp) scoreDisp.textContent = score;
-
-  const progBar = document.getElementById('progress-bar');
-  if (progBar) progBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-  const qText = document.getElementById('question-text');
-  if (qText) qText.textContent = q.question;
-  
-  const feedback = document.getElementById('feedback-container');
-  if (feedback) feedback.classList.add('hidden');
-  
-  const container = document.getElementById('options-container');
-  if (container) {
-    container.innerHTML = q.options.map((option, index) => `
-      <button 
-        data-option="${index}"
-        onclick="selectAnswer(${index})"
-        class="option-btn w-full p-4 text-left rounded-xl transition-all"
-        style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1;"
-      >
-        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg mr-3 font-bold" style="background: rgba(233, 69, 96, 0.3); color: #e94560;">
-          ${String.fromCharCode(65 + index)}
-        </span>
-        ${option}
-      </button>
-    `).join('');
-  }
-}
-
-function selectAnswer(index) {
-  if (answered) return;
-  answered = true;
-  clearInterval(timerInterval);
-  
-  const q = questions[currentQuestion];
-  const isCorrect = index === q.correct;
-  
-  if (isCorrect) {
-    score++;
-    streak++;
-  } else {
-    streak = 0;
-  }
-  
-  const buttons = document.querySelectorAll('[data-option]');
-  buttons.forEach((btn, i) => {
-    btn.disabled = true;
-    if (i === q.correct) {
-      btn.style.background = '#4ade80';
-      btn.style.color = '#1a1a2e';
-    } else if (i === index && !isCorrect) {
-      btn.style.background = '#f87171';
-      btn.style.color = '#1a1a2e';
-    }
-  });
-
-  const feedbackContainer = document.getElementById('feedback-container');
-  const feedbackMessage = document.getElementById('feedback-message');
-  
-  if (feedbackMessage) {
-    if (index === -1) {
-      feedbackMessage.textContent = "Time's Up! ⏰";
-    } else if (streak >= 3 && isCorrect) {
-      feedbackMessage.textContent = `🔥 ${streak} IN A ROW!`;
-    } else {
-      feedbackMessage.textContent = isCorrect ? 'Correct! 🎉' : 'Oops! Wrong answer 😅';
-    }
-    feedbackMessage.style.color = isCorrect ? '#4ade80' : '#f87171';
-  }
-  
-  if (feedbackContainer) feedbackContainer.classList.remove('hidden');
-}
-
-function nextQuestion() {
-  currentQuestion++;
-  if (currentQuestion >= questions.length) {
-    showResults();
-  } else {
-    displayQuestion();
-  }
-}
-
-// --- KEEP YOUR EXISTING HELPER FUNCTIONS BELOW ---
-// loadUsers(), saveUsers(), createAccount(), loginAccount(), getRandomQuestions(), showResults(), etc.
+    // Rank System
+    const ranks = [
+      { name: "Egg", emoji: "🥚", minPoints: 0, maxPoints: 99 },
+      { name: "Chick", emoji: "🐣", minPoints: 100, maxPoints: 249 },
+      { name: "Bird", emoji: "🐤", minPoints: 250, maxPoints: 499 },
+      { name: "Eagle", emoji: "🦅", minPoints: 500, maxPoints: 999 },
+      { name: "Legend", emoji: "🔥", minPoints: 1000, maxPoints: Infinity }
+    ];
 
     // Game State
     let currentUser = null;
@@ -190,135 +78,169 @@ function nextQuestion() {
     let score = 0;
     let answered = false;
     let allUsers = [];
-    let isCreateMode = true;
-    let timerInterval; // <--- MUST HAVE THIS
-    let timeLeft = 15; 
-    let streak = 0;
 
+    // Default Config
+    const defaultConfig = {
+      quiz_title: "Quiz Master",
+      start_button_text: "Start Quiz",
+      correct_message: "Correct! 🎉",
+      wrong_message: "Oops! Wrong answer 😅",
+      background_color: "#1a1a2e",
+      primary_color: "#e94560",
+      text_color: "#f1f1f1",
+      surface_color: "rgba(241, 241, 241, 0.05)",
+      font_family: "Outfit",
+      font_size: 16
+    };
 
-    // Load users from localStorage on page load
-    function loadUsers() {
-      const stored = localStorage.getItem('quizUsers');
+    let config = { ...defaultConfig };
+
+    // Initialize SDK
+    async function initializeSDK() {
+      // Load users from localStorage
+      loadAllUsers();
+
+      if (window.elementSdk) {
+        window.elementSdk.init({
+          defaultConfig,
+          onConfigChange: async (newConfig) => {
+            config = { ...defaultConfig, ...newConfig };
+            applyConfig();
+          },
+          mapToCapabilities: (cfg) => ({
+            recolorables: [
+              {
+                get: () => cfg.background_color || defaultConfig.background_color,
+                set: (value) => window.elementSdk.setConfig({ background_color: value })
+              },
+              {
+                get: () => cfg.surface_color || defaultConfig.surface_color,
+                set: (value) => window.elementSdk.setConfig({ surface_color: value })
+              },
+              {
+                get: () => cfg.text_color || defaultConfig.text_color,
+                set: (value) => window.elementSdk.setConfig({ text_color: value })
+              },
+              {
+                get: () => cfg.primary_color || defaultConfig.primary_color,
+                set: (value) => window.elementSdk.setConfig({ primary_color: value })
+              }
+            ],
+            borderables: [],
+            fontEditable: {
+              get: () => cfg.font_family || defaultConfig.font_family,
+              set: (value) => window.elementSdk.setConfig({ font_family: value })
+            },
+            fontSizeable: {
+              get: () => cfg.font_size || defaultConfig.font_size,
+              set: (value) => window.elementSdk.setConfig({ font_size: value })
+            }
+          }),
+          mapToEditPanelValues: (cfg) => new Map([
+            ["quiz_title", cfg.quiz_title || defaultConfig.quiz_title],
+            ["start_button_text", cfg.start_button_text || defaultConfig.start_button_text],
+            ["correct_message", cfg.correct_message || defaultConfig.correct_message],
+            ["wrong_message", cfg.wrong_message || defaultConfig.wrong_message]
+          ])
+        });
+      }
+    }
+
+    // localStorage Functions
+    function loadAllUsers() {
+      const stored = localStorage.getItem('quizGameUsers');
       allUsers = stored ? JSON.parse(stored) : [];
-      updateLoginDropdown();
     }
 
-    // Save users to localStorage
-    function saveUsers() {
-      localStorage.setItem('quizUsers', JSON.stringify(allUsers));
+    function saveAllUsers() {
+      localStorage.setItem('quizGameUsers', JSON.stringify(allUsers));
     }
 
-    function updateLoginDropdown() {
-      const select = document.getElementById('username-login');
-      const currentValue = select.value;
-      
-      select.innerHTML = '<option value="">-- Select an account --</option>';
-      allUsers.forEach(user => {
-        const option = document.createElement('option');
-        option.value = user.username;
-        option.textContent = user.username;
-        select.appendChild(option);
+    function saveCurrentUser() {
+      if (currentUser) {
+        const index = allUsers.findIndex(u => u.username === currentUser.username);
+        if (index !== -1) {
+          allUsers[index] = currentUser;
+          saveAllUsers();
+        }
+      }
+    }
+
+    function applyConfig() {
+      const bgColor = config.background_color || defaultConfig.background_color;
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+
+      const wrapper = document.getElementById('app-wrapper');
+      wrapper.style.background = `linear-gradient(135deg, ${bgColor} 0%, ${adjustColor(bgColor, 20)} 50%, ${adjustColor(bgColor, 40)} 100%)`;
+
+      document.getElementById('main-title').textContent = config.quiz_title || defaultConfig.quiz_title;
+      document.getElementById('header-title').textContent = config.quiz_title || defaultConfig.quiz_title;
+
+      document.querySelectorAll('[style*="color: #e94560"]').forEach(el => {
+        el.style.color = primaryColor;
       });
 
-      if (allUsers.length === 0) {
-        select.innerHTML = '<option value="">No accounts found. Create one first!</option>';
-      }
+      updateOptionStyles();
     }
 
-    function toggleAuthMode() {
-      isCreateMode = !isCreateMode;
-      const createForm = document.getElementById('create-account-form');
-      const loginForm = document.getElementById('login-form');
-      const toggleBtn = document.getElementById('toggle-text');
-      const subtitle = document.getElementById('auth-subtitle');
-
-      if (isCreateMode) {
-        createForm.classList.remove('hidden');
-        loginForm.classList.add('hidden');
-        toggleBtn.textContent = 'Already have an account? Login';
-        subtitle.textContent = 'Create an account to start playing';
-      } else {
-        createForm.classList.add('hidden');
-        loginForm.classList.remove('hidden');
-        toggleBtn.textContent = 'New here? Create an account';
-        subtitle.textContent = 'Login to your account';
-        updateLoginDropdown();
-      }
+    function adjustColor(hex, amount) {
+      let color = hex.replace('#', '');
+      let num = parseInt(color, 16);
+      let r = Math.min(255, Math.max(0, (num >> 16) + amount));
+      let g = Math.min(255, Math.max(0, ((num >> 8) & 0x00FF) + amount));
+      let b = Math.min(255, Math.max(0, (num & 0x0000FF) + amount));
+      return `#${((r << 16) | (g << 8) | b).toString(16).padStart(6, '0')}`;
     }
 
-    function createAccount(event) {
+    function updateOptionStyles() {
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      
+      document.querySelectorAll('.option-btn[data-option]').forEach(btn => {
+        if (!btn.classList.contains('correct') && !btn.classList.contains('wrong')) {
+          btn.style.borderColor = `${primaryColor}33`;
+          btn.style.color = textColor;
+        }
+      });
+    }
+
+    function getRank(points) {
+      return ranks.find(r => points >= r.minPoints && points <= r.maxPoints) || ranks[0];
+    }
+
+    async function createAccount(event) {
       event.preventDefault();
-      const username = document.getElementById('username-create').value.trim();
-      const errorEl = document.getElementById('error-message-create');
-      const btn = document.getElementById('create-account-btn');
-
-      errorEl.classList.add('hidden');
+      const username = document.getElementById('username').value.trim();
 
       if (!username) {
-        errorEl.textContent = 'Please enter a username';
-        errorEl.classList.remove('hidden');
+        alert('Please enter a username');
         return;
       }
 
       if (allUsers.some(u => u.username === username)) {
-        errorEl.textContent = 'Username already taken';
-        errorEl.classList.remove('hidden');
+        alert('Username already taken');
         return;
       }
 
-      btn.disabled = true;
-      btn.textContent = 'Creating...';
-
-      // Create new user
       const newUser = {
         username: username,
         total_points: 0,
         rank_tier: "Egg",
         quizzes_completed: 0,
         best_score: 0,
-        answered_question_ids: [],
         created_at: new Date().toISOString()
       };
 
       allUsers.push(newUser);
-      saveUsers();
-
+      saveAllUsers();
+      
       currentUser = newUser;
-      document.getElementById('auth-screen').classList.add('hidden');
+      document.getElementById('account-screen').classList.add('hidden');
       document.getElementById('menu-screen').classList.remove('hidden');
       updateProfileDisplay();
-
-      btn.disabled = false;
-      btn.textContent = 'Create Account';
-    }
-
-    function loginAccount(event) {
-      event.preventDefault();
-      const username = document.getElementById('username-login').value.trim();
-      const errorEl = document.getElementById('error-message-login');
-
-      errorEl.classList.add('hidden');
-
-      if (!username) {
-        errorEl.textContent = 'Please select an account';
-        errorEl.classList.remove('hidden');
-        return;
-      }
-
-      currentUser = allUsers.find(u => u.username === username);
-      
-      if (currentUser) {
-        document.getElementById('auth-screen').classList.add('hidden');
-        document.getElementById('menu-screen').classList.remove('hidden');
-        updateProfileDisplay();
-      } else {
-        errorEl.textContent = 'Account not found';
-        errorEl.classList.remove('hidden');
-      }
-    }
-
-    function getRank(points) {
-      return ranks.find(r => points >= r.minPoints && points <= r.maxPoints) || ranks[0];
     }
 
     function updateProfileDisplay() {
@@ -344,130 +266,105 @@ function nextQuestion() {
       updateProfileDisplay();
     }
 
-    function getRandomQuestions(count) {
-  const answeredIds = currentUser ? (currentUser.answered_question_ids || []) : [];
-  let available = allAvailableQuestions.filter(q => !answeredIds.includes(q.id));
-
-  // If no new questions, reset for research purposes so they can play again
-  if (available.length === 0) {
-    if (currentUser) currentUser.answered_question_ids = [];
-    available = [...allAvailableQuestions];
-  }
-
-  return available.sort(() => 0.5 - Math.random()).slice(0, count);
-}
-
-
     function startQuiz() {
       currentQuestion = 0;
       score = 0;
       answered = false;
       
-      // Get 10 random unanswered questions
-      questions = getRandomQuestions(10);
-
       document.getElementById('menu-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
       document.getElementById('results-screen').classList.add('hidden');
-
-      console.log(questions);
-        
+      
       displayQuestion();
     }
 
     function displayQuestion() {
-  const q = questions[currentQuestion];
-  if (!q) return; // Stop if no question exists
+      const q = questions[currentQuestion];
+      answered = false;
+      
+      document.getElementById('question-counter').textContent = `Question ${currentQuestion + 1}/${questions.length}`;
+      document.getElementById('score-display').textContent = score;
+      document.getElementById('progress-bar').style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
+      document.getElementById('category-badge').textContent = q.category;
+      document.getElementById('question-text').textContent = q.question;
+      
+      document.getElementById('feedback-container').classList.add('hidden');
+      
+      const container = document.getElementById('options-container');
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      
+      container.innerHTML = q.options.map((option, index) => `
+        <button 
+          data-option="${index}"
+          onclick="selectAnswer(${index})"
+          class="option-btn w-full p-3 sm:p-4 text-left rounded-lg sm:rounded-xl font-medium text-sm sm:text-base transition-all"
+          style="background: rgba(241, 241, 241, 0.05); border: 2px solid ${primaryColor}33; color: ${textColor}; font-family: 'Space Grotesk', sans-serif;"
+        >
+          <span class="inline-flex items-center justify-center w-7 sm:w-8 h-7 sm:h-8 rounded-lg mr-2 sm:mr-3 text-xs sm:text-sm font-bold" style="background: ${primaryColor}33; color: ${primaryColor};">
+            ${String.fromCharCode(65 + index)}
+          </span>
+          ${option}
+        </button>
+      `).join('');
 
-  answered = false;
-  
-  // 1. Reset and Start Timer
-  clearInterval(timerInterval);
-  startTimer();
-
-  // 2. Safe UI Updates (Checks if ID exists before trying to change it)
-  const counter = document.getElementById('question-counter');
-  if (counter) counter.textContent = `Question ${currentQuestion + 1}/${questions.length}`;
-
-  const scoreDisp = document.getElementById('score-display');
-  if (scoreDisp) scoreDisp.textContent = score;
-
-  const progBar = document.getElementById('progress-bar');
-  if (progBar) progBar.style.width = `${((currentQuestion + 1) / questions.length) * 100}%`;
-
-  const catBadge = document.getElementById('category-badge');
-  if (catBadge) catBadge.textContent = q.category;
-
-  const qText = document.getElementById('question-text');
-  if (qText) qText.textContent = q.question;
-  
-  // 3. Hide feedback
-  const feedback = document.getElementById('feedback-container');
-  if (feedback) feedback.classList.add('hidden');
-  
-  // 4. Render Options
-  const container = document.getElementById('options-container');
-  if (container) {
-    container.innerHTML = q.options.map((option, index) => `
-      <button 
-        data-option="${index}"
-        onclick="selectAnswer(${index})"
-        class="option-btn w-full p-4 text-left rounded-xl transition-all"
-        style="background: rgba(241, 241, 241, 0.05); border: 2px solid rgba(233, 69, 96, 0.3); color: #f1f1f1;"
-      >
-        <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg mr-3 font-bold" style="background: rgba(233, 69, 96, 0.3); color: #e94560;">
-          ${String.fromCharCode(65 + index)}
-        </span>
-        ${option}
-      </button>
-    `).join('');
-  }
-}
-
-
+      container.querySelectorAll('button').forEach((btn, i) => {
+        btn.style.opacity = '0';
+        btn.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          btn.style.transition = 'all 0.3s ease';
+          btn.style.opacity = '1';
+          btn.style.transform = 'translateY(0)';
+        }, i * 100);
+      });
+    }
 
     function selectAnswer(index) {
       if (answered) return;
       answered = true;
-      clearInterval(timerInterval); // Stop the clock!
       
       const q = questions[currentQuestion];
       const isCorrect = index === q.correct;
-      
-      if (isCorrect) {
-        score++;
-        streak++; // Add to streak
-      } else {
-        streak = 0; // Reset streak on wrong answer
-      }
-      
       const buttons = document.querySelectorAll('[data-option]');
+      
       buttons.forEach((btn, i) => {
         btn.disabled = true;
         if (i === q.correct) {
-          btn.style.background = '#4ade80'; // Green for correct
+          btn.style.background = '#4ade80';
+          btn.style.borderColor = '#4ade80';
           btn.style.color = '#1a1a2e';
+          btn.classList.add('correct');
         } else if (i === index && !isCorrect) {
-          btn.style.background = '#f87171'; // Red for wrong
+          btn.style.background = '#f87171';
+          btn.style.borderColor = '#f87171';
           btn.style.color = '#1a1a2e';
+          btn.classList.add('wrong', 'animate-shake');
         }
       });
-    
-      const feedbackMessage = document.getElementById('feedback-message');
       
-      // Custom feedback for streaks
-      if (index === -1) {
-        feedbackMessage.textContent = "Time's up! ⏰";
-      } else if (streak >= 3 && isCorrect) {
-        feedbackMessage.textContent = `🔥 ${streak} STREAK!`;
-      } else {
-        feedbackMessage.textContent = isCorrect ? 'Correct! 🎉' : 'Oops! Wrong answer 😅';
+      if (isCorrect) {
+        score++;
+        document.getElementById('score-display').textContent = score;
+        document.getElementById('score-display').parentElement.classList.add('animate-pulse-once');
       }
       
+      const feedbackContainer = document.getElementById('feedback-container');
+      const feedbackMessage = document.getElementById('feedback-message');
+      
+      feedbackMessage.textContent = isCorrect 
+        ? (config.correct_message || defaultConfig.correct_message)
+        : (config.wrong_message || defaultConfig.wrong_message);
       feedbackMessage.style.color = isCorrect ? '#4ade80' : '#f87171';
-      document.getElementById('feedback-container').classList.remove('hidden');
+      
+      const nextBtn = document.getElementById('next-btn');
+      if (currentQuestion === questions.length - 1) {
+        nextBtn.textContent = 'See Results 🏆';
+      } else {
+        nextBtn.textContent = 'Next Question →';
+      }
+      
+      feedbackContainer.classList.remove('hidden');
     }
-
 
     function nextQuestion() {
       currentQuestion++;
@@ -479,7 +376,7 @@ function nextQuestion() {
       }
     }
 
-    function showResults() {
+    async function showResults() {
       document.getElementById('quiz-screen').classList.add('hidden');
       document.getElementById('results-screen').classList.remove('hidden');
       
@@ -515,30 +412,21 @@ function nextQuestion() {
         scoreMessage.textContent = 'Time to study more!';
       }
 
-      // Mark questions as answered and update user stats
+      // Update user stats in localStorage
       if (currentUser) {
-        questions.forEach(q => {
-          if (!currentUser.answered_question_ids.includes(q.id)) {
-            currentUser.answered_question_ids.push(q.id);
-          }
-        });
-
         const newTotalPoints = (currentUser.total_points || 0) + points;
         const newBestScore = Math.max(currentUser.best_score || 0, score);
         const newRank = getRank(newTotalPoints).name;
 
-        currentUser.total_points = newTotalPoints;
-        currentUser.best_score = newBestScore;
-        currentUser.rank_tier = newRank;
-        currentUser.quizzes_completed = (currentUser.quizzes_completed || 0) + 1;
+        currentUser = {
+          ...currentUser,
+          total_points: newTotalPoints,
+          best_score: newBestScore,
+          rank_tier: newRank,
+          quizzes_completed: (currentUser.quizzes_completed || 0) + 1
+        };
 
-        // Update in allUsers array
-        const userIndex = allUsers.findIndex(u => u.username === currentUser.username);
-        if (userIndex !== -1) {
-          allUsers[userIndex] = currentUser;
-        }
-
-        saveUsers();
+        saveCurrentUser();
       }
     }
 
@@ -549,68 +437,20 @@ function nextQuestion() {
     }
 
     function exitQuiz() {
-      document.getElementById('quiz-screen').classList.add('hidden');
-      document.getElementById('menu-screen').classList.remove('hidden');
+      if (confirm('Exit quiz without saving?')) {
+        document.getElementById('quiz-screen').classList.add('hidden');
+        document.getElementById('menu-screen').classList.remove('hidden');
+      }
     }
 
     function logout() {
       currentUser = null;
-      isCreateMode = true;
       document.getElementById('menu-screen').classList.add('hidden');
-      document.getElementById('auth-screen').classList.remove('hidden');
-      document.getElementById('username-create').value = '';
-      document.getElementById('username-login').value = '';
+      document.getElementById('account-screen').classList.remove('hidden');
+      document.getElementById('username').value = '';
       document.getElementById('profile-card').classList.add('hidden');
-      document.getElementById('error-message-create').classList.add('hidden');
-      document.getElementById('error-message-login').classList.add('hidden');
-      document.getElementById('create-account-form').classList.remove('hidden');
-      document.getElementById('login-form').classList.add('hidden');
-      document.getElementById('toggle-text').textContent = 'Already have an account? Login';
-      document.getElementById('auth-subtitle').textContent = 'Create an account to start playing';
     }
 
-    function startTimer() {
-      timeLeft = 15; 
-      const timerEl = document.getElementById('timer-display');
-      
-      if (timerEl) {
-        timerEl.textContent = `Time: ${timeLeft}s`;
-        timerEl.classList.remove('timer-low');
-      }
-    
-      timerInterval = setInterval(() => {
-        timeLeft--;
-        if (timerEl) timerEl.textContent = `Time: ${timeLeft}s`;
-        
-        if (timeLeft <= 5 && timerEl) {
-          timerEl.classList.add('timer-low');
-        }
-        
-        if (timeLeft <= 0) {
-          clearInterval(timerInterval);
-          selectAnswer(-1); // This triggers the "Time's Up" logic
-        }
-      }, 1000);
-    }
-
-
-
-
-
-    // Initialize on page load
-    loadUsers();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    // Initialize
+    initializeSDK();
+    applyConfig();
