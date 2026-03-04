@@ -351,8 +351,24 @@
     }
 
     function displayQuestion() {
-      const q = questions[currentQuestion];
-      answered = false;
+    const q = questions[currentQuestion];
+    answered = false;
+
+    // Safety: Clear any existing timer before starting a new one
+    if (typeof timerInterval !== 'undefined') {
+        clearInterval(timerInterval);
+    }
+    
+    // Check if startTimer exists before calling it
+    if (typeof startTimer === "function") {
+        startTimer();
+    }
+
+    // Now, show the question content
+    const questionText = document.getElementById('question-text');
+    if (questionText) {
+        questionText.textContent = q.question;
+    }
       
       // NEW: Reset and Start the timer
       clearInterval(timerInterval);
@@ -556,6 +572,7 @@
 
     // Initialize on page load
     loadUsers();
+
 
 
 
