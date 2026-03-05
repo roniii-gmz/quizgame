@@ -50,3 +50,32 @@ input, textarea, select {
     font-size: 28px;
     font-weight: bold;
 }
+
+/* Suble glow for 3-4 streak (Visual only) */
+.warming-up {
+  color: #fbbf24 !important; /* Yellowish gold */
+  text-shadow: 0 0 8px #fbbf24;
+  transition: all 0.3s ease;
+}
+
+.on-fire {
+  color: #ff4500 !important;
+  text-shadow: 0 0 10px #ffae00, 0 0 20px #ff4500;
+  animation: pulse-fire 0.8s infinite alternate;
+}
+
+.perfect-streak {
+  color: #00d4ff !important;
+  text-shadow: 0 0 15px #00d4ff, 0 0 30px #ffffff;
+  animation: shake 0.2s infinite, pulse-fire 0.5s infinite alternate;
+}
+
+@keyframes pulse-fire {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+#timer-display.animate-pulse-once {
+  animation: pulse 0.5s infinite; /* Faster pulse for the timer */
+  color: #f87171 !important;
+}
