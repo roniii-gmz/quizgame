@@ -157,9 +157,14 @@
     let currentUser = null;
     let currentQuestion = 0;
     let score = 0;
+    let currentStreak = 0; // Track consecutive correct answers in the current quiz
+    let totalPointsEarned = 0; // Track the points including bonuses
     let answered = false;
     let allUsers = [];
     let isCreateMode = true;
+    let timerInterval = null;
+    let timeLeft = 15;
+    let maxStreak = 0; // Tracks the highest streak reached in the current quiz
 
     // Load users from localStorage on page load
     function loadUsers() {
@@ -337,11 +342,14 @@
     function startQuiz() {
       currentQuestion = 0;
       score = 0;
+      currentStreak = 0; // Reset streak
+      maxStreak = 0;
       answered = false;
       
       // Get 10 random unanswered questions
       questions = getRandomQuestions(10);
 
+      document.getElementById('score-display').parentElement.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full";
       document.getElementById('menu-screen').classList.add('hidden');
       document.getElementById('quiz-screen').classList.remove('hidden');
       document.getElementById('results-screen').classList.add('hidden');
@@ -386,10 +394,27 @@
           btn.style.transform = 'translateY(0)';
         }, i * 100);
       });
+
+      // RESET AND START TIMER
+      timeLeft = 15; 
+      const timerDoc = document.getElementById('timer-display');
+        
+      if (timerDoc) {
+          timerDoc.textContent = "15s";
+          timerDoc.style.color = "#f1f1f1"; // Reset to white/original color
+          timerDoc.classList.remove('animate-pulse-once'); // Remove the pumping animation
+      }
+      
+      if(timerInterval) clearInterval(timerInterval); // Clear old timer
+      startTimer();
     }
 
     function selectAnswer(index) {
       if (answered) return;
+
+      // STOP THE CLOCK IMMEDIATELY
+      clearInterval(timerInterval); 
+    
       answered = true;
       
       const q = questions[currentQuestion];
@@ -413,8 +438,31 @@
       
       if (isCorrect) {
         score++;
-        document.getElementById('score-display').textContent = score;
-        document.getElementById('score-display').parentElement.classList.add('animate-pulse-once');
+        currentStreak++;
+        // Update maxStreak if currentStreak is higher
+        if (currentStreak > maxStreak) {
+            maxStreak = currentStreak;
+        }
+        
+        // Handle Visual Effects
+        const scoreDisplay = document.getElementById('score-display');
+        const scoreContainer = scoreDisplay.parentElement;
+        
+        if (currentStreak >= 10) {
+            scoreContainer.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full perfect-streak";
+        } else if (currentStreak >= 5) {
+            scoreContainer.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full on-fire";
+        } else if (currentStreak >= 3) {
+            // New "Warming Up" visual for 3-4 streak
+            scoreContainer.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full warming-up";
+        }
+
+        scoreDisplay.textContent = score;
+        scoreContainer.classList.add('animate-pulse-once');
+      } else {
+        // RESET STREAK on wrong answer
+        currentStreak = 0;
+        document.getElementById('score-display').parentElement.className = "flex items-center gap-2 px-3 sm:px-4 py-2 rounded-full";
       }
       
       const feedbackContainer = document.getElementById('feedback-container');
@@ -433,6 +481,50 @@
       feedbackContainer.classList.remove('hidden');
     }
 
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeLeft--;
+            const timerDoc = document.getElementById('timer-display');
+            
+            if (timerDoc) {
+                timerDoc.textContent = `${timeLeft}s`;
+                
+                // Trigger pressure at 5 seconds
+                if (timeLeft <= 5) {
+                    timerDoc.style.color = '#f87171'; // Red
+                    timerDoc.classList.add('animate-pulse-once'); // Start pumping
+                }
+            }
+
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                selectAnswer(-1); // Timeout penalty
+            }
+        }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const display = document.getElementById('timer-display');
+      display.textContent = `${timeLeft}s`;
+      
+      // Visual pressure: Turn timer red when below 5 seconds
+      if (timeLeft <= 5) {
+        display.style.color = '#f87171';
+        display.classList.add('animate-pulse-once');
+      } else {
+        display.style.color = '#f1f1f1';
+      }
+    }
+
+    function handleTimeout() {
+      // If time runs out, treat it as a wrong answer (reset streak!)
+      const buttons = document.querySelectorAll('[data-option]');
+      buttons.forEach(btn => btn.disabled = true);
+      
+      // Use your existing "Wrong Answer" logic
+      selectAnswer(-1); // Pass -1 to show it's incorrect/timeout
+    }
+
     function nextQuestion() {
       currentQuestion++;
       
@@ -444,23 +536,51 @@
     }
 
     function showResults() {
+      // Stop the timer immediately when the results show
+      clearInterval(timerInterval);
+
       document.getElementById('quiz-screen').classList.add('hidden');
       document.getElementById('results-screen').classList.remove('hidden');
-      
+
       const finalScore = document.getElementById('final-score');
       const scoreMessage = document.getElementById('score-message');
       const resultEmoji = document.getElementById('result-emoji');
       const correctCount = document.getElementById('correct-count');
+      const resultStreak = document.getElementById('result-streak'); // Target for the streak UI
       const wrongCount = document.getElementById('wrong-count');
       const pointsEarned = document.getElementById('points-earned');
-      
+
+      // 1. Update the Basic UI Text
       finalScore.textContent = score;
       correctCount.textContent = score;
       wrongCount.textContent = questions.length - score;
+      resultStreak.textContent = maxStreak; // Displays the highest streak reached
+
+      // 2. Calculation Logic
+      let basePoints = score * 10;
+      let bonusPoints = 0;
+
+      // Rule: Use maxStreak for the bonus check
+      if (maxStreak === 10) {
+        bonusPoints = 10;
+      } else if (maxStreak >= 5) {
+        bonusPoints = 5;
+      }
+
+      const totalSessionPoints = basePoints + bonusPoints;
+
+      // 3. Display the total with a breakdown hint
+      // This shows "+110" but you can also append "(Includes +10 Bonus!)" if you like
+      pointsEarned.textContent = `+${totalSessionPoints}`;
       
-      const points = score * 10;
-      pointsEarned.textContent = `+${points}`;
-      
+      // Visual feedback: If they got a bonus, make the points text pulse gold
+      if (bonusPoints > 0) {
+        pointsEarned.style.color = "#fbbf24";
+      } else {
+        pointsEarned.style.color = "#f1f1f1";
+      }
+
+      // 4. Emoji and Message Logic (Existing)
       const percentage = (score / questions.length) * 100;
       if (percentage === 100) {
         resultEmoji.textContent = '🏆';
@@ -471,23 +591,14 @@
       } else if (percentage >= 60) {
         resultEmoji.textContent = '👏';
         scoreMessage.textContent = 'Good job! Well done!';
-      } else if (percentage >= 40) {
-        resultEmoji.textContent = '💪';
-        scoreMessage.textContent = 'Not bad! Keep practicing!';
       } else {
         resultEmoji.textContent = '📚';
-        scoreMessage.textContent = 'Time to study more!';
+        scoreMessage.textContent = 'Keep practicing!';
       }
 
-      // Mark questions as answered and update user stats
+      // 5. Update the User's permanent Data
       if (currentUser) {
-        questions.forEach(q => {
-          if (!currentUser.answered_question_ids.includes(q.id)) {
-            currentUser.answered_question_ids.push(q.id);
-          }
-        });
-
-        const newTotalPoints = (currentUser.total_points || 0) + points;
+        const newTotalPoints = (currentUser.total_points || 0) + totalSessionPoints;
         const newBestScore = Math.max(currentUser.best_score || 0, score);
         const newRank = getRank(newTotalPoints).name;
 
@@ -496,7 +607,7 @@
         currentUser.rank_tier = newRank;
         currentUser.quizzes_completed = (currentUser.quizzes_completed || 0) + 1;
 
-        // Update in allUsers array
+        // Update the global users list and save
         const userIndex = allUsers.findIndex(u => u.username === currentUser.username);
         if (userIndex !== -1) {
           allUsers[userIndex] = currentUser;
@@ -515,6 +626,8 @@
     function exitQuiz() {
       document.getElementById('quiz-screen').classList.add('hidden');
       document.getElementById('menu-screen').classList.remove('hidden');
+
+      clearInterval(timerInterval);
     }
 
     function logout() {
